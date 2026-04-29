@@ -1,0 +1,530 @@
+{
+  "template_id": "eco_startup_2026_schema_aligned",
+  "template_name": "2026 기후에너지환경창업대전 사업계획서 스키마 정렬 템플릿",
+  "source_template": "별첨1__2026_기후에너지환경창업대전_사업계획서_AI-삽입용.docx",
+  "placeholder_format": "{{KEY}}",
+  "generation_policy": {
+    "ai_role": "각 필드의 값을 JSON으로 생성",
+    "renderer_role": "생성된 key-value를 DOCX placeholder에 치환",
+    "recommended_response_format": "application/json",
+    "notes": [
+      "서술형 항목은 제목(title)과 설명(desc) 쌍으로 생성",
+      "개요표 장문 항목은 통합형 long_text로 생성",
+      "표 항목은 고정 행 기반으로 우선 구현 후 필요 시 동적 행 복제",
+      "선택 항목은 값이 없으면 해당 없음 또는 공란 정책을 별도 렌더러에서 처리"
+    ]
+  },
+  "sections": [
+    {
+      "key": "overview",
+      "label": "사업계획서 개요(1p)",
+      "fields": [
+        {
+          "key": "APPLY_TYPE",
+          "label": "구분",
+          "type": "enum",
+          "required": true,
+          "enum": [
+            "아이디어",
+            "스타기업"
+          ],
+          "guide": "신청 유형을 입력"
+        },
+        {
+          "key": "REPRESENTATIVE_NAME",
+          "label": "대표자명",
+          "type": "text",
+          "required": true,
+          "guide": "대표자 성명"
+        },
+        {
+          "key": "ITEM_NAME",
+          "label": "아이템명",
+          "type": "text",
+          "required": true,
+          "guide": "창업 아이템명"
+        },
+        {
+          "key": "OVERVIEW_ITEM_DESCRIPTION",
+          "label": "창업 아이템 설명",
+          "type": "long_text",
+          "required": true,
+          "guide": "제품·서비스 개요, 사용 용도, 사양, 핵심 기능·성능, 고객, 제공 혜택 포함"
+        },
+        {
+          "key": "OVERVIEW_BACKGROUND_AND_NEED",
+          "label": "배경 및 필요성",
+          "type": "long_text",
+          "required": true,
+          "guide": "개발 필요성, 해결방안, 주요 목적, 목표시장 설정 및 요구사항 분석 포함"
+        },
+        {
+          "key": "OVERVIEW_TARGET_MARKET_AND_STRATEGY",
+          "label": "목표시장 및 사업화 전략",
+          "type": "long_text",
+          "required": true,
+          "guide": "비즈니스 모델, 고객 확보 전략, 경쟁제품 대비 차별성 및 경쟁력 포함"
+        },
+        {
+          "key": "OVERVIEW_STATUS_AND_PLAN",
+          "label": "현황 및 구체화 방안",
+          "type": "long_text",
+          "required": true,
+          "guide": "사업화 준비상황, 시장 반응, 대표자·기업·외부 협력 활용 계획 포함"
+        },
+        {
+          "key": "OVERVIEW_IMAGE_SLOT",
+          "label": "개요 이미지 슬롯",
+          "type": "image_placeholder",
+          "required": false,
+          "guide": "이미지 삽입 위치 또는 대체 문구"
+        },
+        {
+          "key": "OVERVIEW_IMAGE_TITLE",
+          "label": "개요 이미지 제목",
+          "type": "text",
+          "required": false,
+          "guide": "사진 또는 설계도 제목"
+        }
+      ]
+    },
+    {
+      "key": "section_1_1",
+      "label": "1-1. 배경 및 개발 동기",
+      "fields": [
+        {
+          "key": "SECTION_1_1_MOTIVE_TITLE_1",
+          "label": "개발 동기 1",
+          "type": "text",
+          "required": true,
+          "guide": "핵심 동기 키워드/문장"
+        },
+        {
+          "key": "SECTION_1_1_MOTIVE_DESC_1",
+          "label": "개발 동기 설명 1",
+          "type": "long_text",
+          "required": true,
+          "guide": "창업아이템 제안 배경 및 개발 동기 설명"
+        },
+        {
+          "key": "SECTION_1_1_MOTIVE_TITLE_2",
+          "label": "개발 동기 2",
+          "type": "text",
+          "required": true,
+          "guide": "두 번째 핵심 동기"
+        },
+        {
+          "key": "SECTION_1_1_MOTIVE_DESC_2",
+          "label": "개발 동기 설명 2",
+          "type": "long_text",
+          "required": true,
+          "guide": "두 번째 배경/동기 설명"
+        }
+      ]
+    },
+    {
+      "key": "section_1_2",
+      "label": "1-2. 목적(필요성)",
+      "fields": [
+        {
+          "key": "SECTION_1_2_PURPOSE_TITLE_1",
+          "label": "목적 및 필요성 1",
+          "type": "text",
+          "required": true,
+          "guide": "구현 목표 또는 필요성 제목"
+        },
+        {
+          "key": "SECTION_1_2_PURPOSE_DESC_1",
+          "label": "목적 및 필요성 설명 1",
+          "type": "long_text",
+          "required": true,
+          "guide": "창업아이템을 통해 구현하고자 하는 목표 설명"
+        },
+        {
+          "key": "SECTION_1_2_PURPOSE_TITLE_2",
+          "label": "목적 및 필요성 2",
+          "type": "text",
+          "required": true,
+          "guide": "시장 문제점/환경현안 관련 제목"
+        },
+        {
+          "key": "SECTION_1_2_PURPOSE_DESC_2",
+          "label": "목적 및 필요성 설명 2",
+          "type": "long_text",
+          "required": true,
+          "guide": "국내외 시장 문제점의 혁신적 해결방안 설명"
+        }
+      ]
+    },
+    {
+      "key": "section_2_1",
+      "label": "2-1. 사업 타당성",
+      "fields": [
+        {
+          "key": "SECTION_2_1_FEASIBILITY_TITLE_1",
+          "label": "사업타당성 1",
+          "type": "text",
+          "required": true,
+          "guide": "시장성/경쟁력 관련 제목"
+        },
+        {
+          "key": "SECTION_2_1_FEASIBILITY_DESC_1",
+          "label": "사업타당성 설명 1",
+          "type": "long_text",
+          "required": true,
+          "guide": "기존 시장규모, 경쟁사 대비 우위 등"
+        },
+        {
+          "key": "SECTION_2_1_FEASIBILITY_TITLE_2",
+          "label": "사업타당성 2",
+          "type": "text",
+          "required": true,
+          "guide": "기술성/차별화 관련 제목"
+        },
+        {
+          "key": "SECTION_2_1_FEASIBILITY_DESC_2",
+          "label": "사업타당성 설명 2",
+          "type": "long_text",
+          "required": true,
+          "guide": "기술개발 수준, 기능/성분/디자인 차별화 전략 등"
+        }
+      ]
+    },
+    {
+      "key": "section_2_2",
+      "label": "2-2. 추진 계획",
+      "fields": [
+        {
+          "key": "SECTION_2_2_EXECUTION_TITLE_1",
+          "label": "추진계획 1",
+          "type": "text",
+          "required": true,
+          "guide": "제작 방식/개발 단계 관련 제목"
+        },
+        {
+          "key": "SECTION_2_2_EXECUTION_DESC_1",
+          "label": "추진계획 설명 1",
+          "type": "long_text",
+          "required": true,
+          "guide": "제작 소요기간 및 제작방법(자체/외주) 설명"
+        },
+        {
+          "key": "SECTION_2_2_EXECUTION_TITLE_2",
+          "label": "추진계획 2",
+          "type": "text",
+          "required": true,
+          "guide": "사업화 로드맵 관련 제목"
+        },
+        {
+          "key": "SECTION_2_2_EXECUTION_DESC_2",
+          "label": "추진계획 설명 2",
+          "type": "long_text",
+          "required": true,
+          "guide": "추진일정과 전체 로드맵 설명"
+        },
+        {
+          "key": "ROADMAP_ROW_1_TASK",
+          "label": "추진일정 1 추진내용",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_1_PERIOD",
+          "label": "추진일정 1 기간",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_1_DETAIL",
+          "label": "추진일정 1 세부내용",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_2_TASK",
+          "label": "추진일정 2 추진내용",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_2_PERIOD",
+          "label": "추진일정 2 기간",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_2_DETAIL",
+          "label": "추진일정 2 세부내용",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_3_TASK",
+          "label": "추진일정 3 추진내용",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_3_PERIOD",
+          "label": "추진일정 3 기간",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_3_DETAIL",
+          "label": "추진일정 3 세부내용",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_4_TASK",
+          "label": "추진일정 4 추진내용",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_4_PERIOD",
+          "label": "추진일정 4 기간",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ROADMAP_ROW_4_DETAIL",
+          "label": "추진일정 4 세부내용",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "key": "section_3_1",
+      "label": "3-1. 시장진입 및 수익 창출 전략",
+      "fields": [
+        {
+          "key": "SECTION_3_1_STRATEGY_TITLE_1",
+          "label": "전략 1",
+          "type": "text",
+          "required": true,
+          "guide": "시장진입 또는 고객확보 핵심 전략 제목"
+        },
+        {
+          "key": "SECTION_3_1_STRATEGY_DESC_1",
+          "label": "전략 설명 1",
+          "type": "long_text",
+          "required": true,
+          "guide": "단계별 사업화 계획, 목표시장 내 입지, 고객 확보 전략 등"
+        },
+        {
+          "key": "SECTION_3_1_STRATEGY_TITLE_2",
+          "label": "전략 2",
+          "type": "text",
+          "required": true,
+          "guide": "수익모델 또는 성과 창출 전략 제목"
+        },
+        {
+          "key": "SECTION_3_1_STRATEGY_DESC_2",
+          "label": "전략 설명 2",
+          "type": "long_text",
+          "required": true,
+          "guide": "수익모델과 사업화 성과 창출 전략"
+        }
+      ]
+    },
+    {
+      "key": "section_3_2",
+      "label": "3-2. 자금 조달 계획",
+      "fields": [
+        {
+          "key": "SECTION_3_2_FUNDING_TITLE_1",
+          "label": "조달계획 1",
+          "type": "text",
+          "required": true,
+          "guide": "정부지원사업/정책자금 관련 제목"
+        },
+        {
+          "key": "SECTION_3_2_FUNDING_DESC_1",
+          "label": "조달계획 설명 1",
+          "type": "long_text",
+          "required": true,
+          "guide": "R&D, 정책자금 등 정부지원사업을 통한 자금 확보 전략"
+        },
+        {
+          "key": "SECTION_3_2_FUNDING_TITLE_2",
+          "label": "조달계획 2",
+          "type": "text",
+          "required": true,
+          "guide": "민간 투자유치 관련 제목"
+        },
+        {
+          "key": "SECTION_3_2_FUNDING_DESC_2",
+          "label": "조달계획 설명 2",
+          "type": "long_text",
+          "required": true,
+          "guide": "엔젤투자, VC, 크라우드 펀딩 등 향후 투자유치 추진전략"
+        }
+      ]
+    },
+    {
+      "key": "team_and_optional_tables",
+      "label": "팀 구성 및 기타",
+      "fields": [
+        {
+          "key": "FOUNDER_POSITION",
+          "label": "대표자 직급",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "FOUNDER_NAME",
+          "label": "대표자 성명",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "FOUNDER_ROLE",
+          "label": "대표자 담당업무",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "FOUNDER_PROFILE",
+          "label": "대표자 경력 및 학력",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "FOUNDER_JOIN_DATE",
+          "label": "대표자 채용연월",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "TEAM_MEMBER_1_POSITION",
+          "label": "팀원1 직급",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "TEAM_MEMBER_1_NAME",
+          "label": "팀원1 성명",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "TEAM_MEMBER_1_ROLE",
+          "label": "팀원1 담당업무",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "TEAM_MEMBER_1_PROFILE",
+          "label": "팀원1 경력 및 학력",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "TEAM_MEMBER_1_JOIN_DATE",
+          "label": "팀원1 채용연월",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "AWARD_1_DATE",
+          "label": "수상이력1 일자",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "AWARD_1_RECIPIENT",
+          "label": "수상이력1 수상자",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "AWARD_1_NAME",
+          "label": "수상이력1 대회명",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "AWARD_1_ORGANIZER",
+          "label": "수상이력1 주최기관",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "AWARD_1_LEVEL",
+          "label": "수상이력1 훈격",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "AWARD_1_PRIZE_KRW_THOUSAND",
+          "label": "수상이력1 상금(천원)",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "IP_1_TYPE",
+          "label": "지재권1 구분",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "IP_1_NAME_NUMBER",
+          "label": "지재권1 명칭(번호)",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "IP_1_ACQUIRED_DATE",
+          "label": "지재권1 취득일",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "INVESTMENT_1_DATE",
+          "label": "투자유치1 일자",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "INVESTMENT_1_AMOUNT_KRW_THOUSAND",
+          "label": "투자유치1 금액(천원)",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "INVESTMENT_1_INSTITUTION",
+          "label": "투자유치1 투자기관",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "INVESTMENT_1_NOTE",
+          "label": "투자유치1 비고",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ATTACHMENT_1_LABEL",
+          "label": "첨부 라벨",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ATTACHMENT_1_TITLE",
+          "label": "첨부 제목",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "ATTACHMENT_1_NOTE",
+          "label": "첨부 비고",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
