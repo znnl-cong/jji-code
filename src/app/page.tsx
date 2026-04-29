@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '@/components/ui/Button';
@@ -11,12 +11,10 @@ import { DocumentProject } from '@/types';
 
 export default function HomePage() {
   const router = useRouter();
-  const docxRef = useRef<HTMLInputElement>(null);
 
   const [representativeName, setRepresentativeName] = useState('');
   const [itemName, setItemName] = useState('');
   const [itemDescription, setItemDescription] = useState('');
-  const [docxFile, setDocxFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const [recentProjects, setRecentProjects] = useState<DocumentProject[]>([]);
@@ -27,18 +25,17 @@ export default function HomePage() {
     if (!representativeName.trim()) { setError('대표자명을 입력해 주세요.'); return; }
     if (!itemName.trim()) { setError('아이템명을 입력해 주세요.'); return; }
     if (!itemDescription.trim()) { setError('아이템 설명을 입력해 주세요.'); return; }
-    if (!docxFile) { setError('DOCX 양식 파일을 업로드해 주세요.'); return; }
 
     setUploading(true);
     setError('');
 
     try {
-      const formData = new FormData();
-      formData.append('docx', docxFile);
-
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (!res.ok || !data.success) throw new Error(data.error || '업로드 실패');
+      const templateRes = await fetch('/template.docx');
+      if (!templateRes.ok) throw new Error('양식 파일을 불러오지 못했습니다.');
+      const arrayBuffer = await templateRes.arrayBuffer();
+      const templateDocxBase64 = btoa(
+        new Uint8Array(arrayBuffer).reduce((acc, byte) => acc + String.fromCharCode(byte), '')
+      );
 
       const projectId = uuidv4();
       const project: DocumentProject = {
@@ -50,11 +47,11 @@ export default function HomePage() {
           itemName: itemName.trim(),
           itemDescription: itemDescription.trim(),
         },
-        templateDocxBase64: data.templateDocxBase64,
+        templateDocxBase64,
         filledFields: [],
         followUpQuestions: [],
         currentStep: 'generate',
-        templateFileName: docxFile.name,
+        templateFileName: 'template.docx',
       };
 
       saveProject(project);
@@ -138,43 +135,6 @@ export default function HomePage() {
                 rows={7}
                 className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm leading-relaxed resize-none"
               />
-            </div>
-
-            {/* DOCX 업로드 */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                사업계획서 양식 (DOCX) <span className="text-red-400">*</span>
-              </label>
-              <div
-                onClick={() => docxRef.current?.click()}
-                className={`cursor-pointer rounded-xl border-2 border-dashed px-4 py-3 flex items-center gap-3 transition-colors ${
-                  docxFile
-                    ? 'border-green-400 bg-green-50'
-                    : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                }`}
-              >
-                {docxFile ? (
-                  <>
-                    <svg className="w-4 h-4 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-sm text-green-700 truncate flex-1">{docxFile.name}</span>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setDocxFile(null); }}
-                      className="text-gray-300 hover:text-gray-500"
-                    >✕</button>
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-4 h-4 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span className="text-sm text-gray-400">사업계획서 양식.docx 파일</span>
-                  </>
-                )}
-                <input ref={docxRef} type="file" accept=".docx" className="hidden"
-                  onChange={(e) => { const f = e.target.files?.[0]; if (f) { setDocxFile(f); setError(''); } }} />
-              </div>
             </div>
 
             {error && (
