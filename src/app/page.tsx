@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { Spinner } from '@/components/ui/Spinner';
 import { getProjects, saveProject, deleteProject } from '@/lib/store';
 import { DocumentProject } from '@/types';
 
@@ -19,7 +20,34 @@ export default function HomePage() {
   const [error, setError] = useState('');
   const [recentProjects, setRecentProjects] = useState<DocumentProject[]>([]);
 
+  const [hint, setHint] = useState('');
+  const [generating, setGenerating] = useState(false);
+  const [generateError, setGenerateError] = useState('');
+  const [isAiGenerated, setIsAiGenerated] = useState(false);
+
   useEffect(() => { setRecentProjects(getProjects()); }, []);
+
+  const handleGenerate = async () => {
+    setGenerating(true);
+    setGenerateError('');
+    try {
+      const res = await fetch('/api/suggest-item', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ hint: hint.trim() }),
+      });
+      if (!res.ok) throw new Error('생성에 실패했습니다.');
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      if (data.itemName) setItemName(data.itemName);
+      if (data.itemDescription) setItemDescription(data.itemDescription);
+      setIsAiGenerated(true);
+    } catch (err) {
+      setGenerateError(err instanceof Error ? err.message : '오류가 발생했습니다.');
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   const handleStart = async () => {
     if (!representativeName.trim()) { setError('대표자명을 입력해 주세요.'); return; }
@@ -106,6 +134,41 @@ export default function HomePage() {
                 placeholder="예: 홍길동"
                 className="w-full h-11 px-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               />
+            </div>
+
+            {/* AI 아이템 자동 생성 */}
+            <div className="bg-blue-50 border border-blue-100 rounded-xl p-3.5 space-y-2.5">
+              <p className="text-sm font-medium text-blue-800">
+                AI로 아이템 자동 생성
+                <span className="ml-1.5 text-xs font-normal text-blue-500">키워드 없이도 생성 가능합니다</span>
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={hint}
+                  onChange={(e) => setHint(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' && !generating) handleGenerate(); }}
+                  placeholder="키워드 입력 (선택) — 예: 태양광 폐패널 재활용, 탄소 발자국 앱..."
+                  disabled={generating}
+                  className="flex-1 h-9 px-3 rounded-lg border border-blue-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm placeholder:text-gray-400 disabled:opacity-60"
+                />
+                <button
+                  onClick={handleGenerate}
+                  disabled={generating}
+                  className="h-9 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 text-white text-sm font-medium flex items-center gap-1.5 whitespace-nowrap transition-colors"
+                >
+                  {generating ? (
+                    <><Spinner size="sm" className="text-white" />생성 중...</>
+                  ) : isAiGenerated ? (
+                    '↺ 다시 생성'
+                  ) : (
+                    '✦ AI 생성'
+                  )}
+                </button>
+              </div>
+              {generateError && (
+                <p className="text-xs text-red-500">{generateError}</p>
+              )}
             </div>
 
             {/* 아이템명 */}
